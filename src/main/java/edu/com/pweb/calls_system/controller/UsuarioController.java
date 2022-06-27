@@ -17,55 +17,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.com.pweb.calls_system.dto.ClienteIn;
-import edu.com.pweb.calls_system.dto.ClienteOut;
-import edu.com.pweb.calls_system.service.ClienteService;
+import edu.com.pweb.calls_system.dto.UsuarioIn;
+import edu.com.pweb.calls_system.dto.UsuarioOut;
+import edu.com.pweb.calls_system.service.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/usuarios")
 @CrossOrigin(origins = "*")
-public class ClienteController {
+public class UsuarioController {
 
-    final ClienteService clienteService;
+    final UsuarioService usuarioService;
 
-    @ApiOperation(value = "Retorna todos os clientes")
+    @ApiOperation(value = "Retorna todos os usuarios")
     @GetMapping
-    public ResponseEntity<List<ClienteOut>> listAll() {
-        List<ClienteOut> clientes = clienteService.listAll();
-        return new ResponseEntity<List<ClienteOut>>(clientes, HttpStatus.OK);
+    public ResponseEntity<List<UsuarioOut>> listAll() {
+        List<UsuarioOut> usuarios = usuarioService.listAll();
+        return new ResponseEntity<List<UsuarioOut>>(usuarios, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Retorna cliente por id")
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteOut> findById(@Valid @PathVariable Long id) {
-        ClienteOut usuario = clienteService.findById(id);
-        return new ResponseEntity<ClienteOut>(usuario, HttpStatus.OK);
+    public ResponseEntity<UsuarioOut> findById(@Valid @PathVariable String id) {
+        UsuarioOut usuario = usuarioService.findById(id);
+        return new ResponseEntity<UsuarioOut>(usuario, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Salva cliente")
     @PostMapping
-    public ResponseEntity<ClienteOut> save(@Valid @RequestBody ClienteIn clienteIn) {
-        ClienteOut clienteOut = clienteService.save(clienteIn);
-        return new ResponseEntity<ClienteOut>(clienteOut, HttpStatus.CREATED);
+    public ResponseEntity<UsuarioOut> save(@Valid @RequestBody UsuarioIn usuarioIn) {
+        UsuarioOut UsuarioOut = usuarioService.save(usuarioIn);
+        return new ResponseEntity<UsuarioOut>(UsuarioOut, HttpStatus.CREATED);
 
     }
    
     @ApiOperation(value = "Atualiza cliente")
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ClienteIn clienteIn) {
-       clienteService.update(id, clienteIn);
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody UsuarioIn usuarioIn) {
+       usuarioService.update(id, usuarioIn);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ApiOperation(value = "Deleta cliente")
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        clienteService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable String id) {
+        usuarioService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

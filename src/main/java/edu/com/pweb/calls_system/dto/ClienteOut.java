@@ -11,17 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ClienteOut {
-    private String id;
+    private Long id;
+    private UsuarioOut usuario;
     private String nome;
-    private byte[] foto;
+    private String email;
     private String cnpj;
     private String endereco;
     private LocalDate dataCadastro;
 
     public ClienteOut(Cliente cliente) {
         this.id = cliente.getId();
+        this.usuario = new UsuarioOut(cliente.getUsuario());
         this.nome = cliente.getNome();
-        this.foto = cliente.getFoto();
+        this.email = cliente.getEmail();
         this.cnpj = cliente.getCnpj();
         this.endereco = cliente.getEndereco();
         this.dataCadastro = cliente.getDataCadastro();

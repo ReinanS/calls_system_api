@@ -1,26 +1,23 @@
 package edu.com.pweb.calls_system.dto;
 
-import java.time.LocalDate;
-
+import javax.persistence.Lob;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 
 @Getter
-public class ClienteIn {
+public class UsuarioIn {
+    
     @NotBlank
-    private String usuarioId;
+    private String uid;
 
     @NotBlank
     private String nome;
-    
+
     @NotBlank @Email
     private String email;
 
-    private String cnpj;
-
-    private String endereco;
-
-    private LocalDate dataCadastro;
+    @Lob
+    private byte[] foto;
 }

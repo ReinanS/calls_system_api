@@ -31,8 +31,16 @@ public class ChamadoController {
 
     final ChamadoService chamadoService;
 
+    // Preciso retornar todos os chamados do usuário
+    @ApiOperation(value = "Retorna todos os chamados do cliente")
+    @GetMapping("/cliente/{clienteId}")
+    public ResponseEntity<List<ChamadoOut>> listAll(@PathVariable Long clienteId) {
+        List<ChamadoOut> chamados = chamadoService.listAll(clienteId);
+        return new ResponseEntity<List<ChamadoOut>>(chamados, HttpStatus.OK);
+    }
+
     @ApiOperation(value = "Retorna todos os chamados do usuário")
-    @GetMapping("/usuario/{usuarioId}")
+    @GetMapping("/usuarios/{usuarioId}")
     public ResponseEntity<List<ChamadoOut>> listAll(@PathVariable String usuarioId) {
         List<ChamadoOut> chamados = chamadoService.listAll(usuarioId);
         return new ResponseEntity<List<ChamadoOut>>(chamados, HttpStatus.OK);
@@ -47,7 +55,7 @@ public class ChamadoController {
 
     @ApiOperation(value = "Salva um chamado")
     @PostMapping
-    public ResponseEntity<ChamadoOut> save(@Valid @RequestBody ChamadoIn chamadoIn) {
+    public ResponseEntity<ChamadoOut> save(@RequestBody ChamadoIn chamadoIn) {
         ChamadoOut chamadoOut = chamadoService.save(chamadoIn);
         return new ResponseEntity<ChamadoOut>(chamadoOut, HttpStatus.CREATED);
     }

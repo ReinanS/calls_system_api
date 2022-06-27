@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import edu.com.pweb.calls_system.dto.ClienteIn;
 import edu.com.pweb.calls_system.dto.ClienteOut;
 import edu.com.pweb.calls_system.model.Cliente;
+import edu.com.pweb.calls_system.model.Usuario;
 import edu.com.pweb.calls_system.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 
@@ -16,24 +17,22 @@ import lombok.AllArgsConstructor;
 @Service
 public class ClienteService {
     private final ClienteRepository clienteRepository;
+    private final UsuarioService usuarioService;
 
-    public Cliente findByIdOrThrowNotFoundRequestException(String id) {
+    public Cliente findByIdOrThrowNotFoundRequestException(Long id) {
         return clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contato não encontrado"));
     }
 
     public ClienteOut save(ClienteIn clienteIn) {
-        // Encontrou usuário, então salve o cliente    
-        Cliente cliente = new Cliente(clienteIn.getId(), clienteIn.getNome(), clienteIn.getEmail(), clienteIn.getFoto(), clienteIn.getCnpj(), clienteIn.getEndereco(), clienteIn.getDataCadastro());
+        Usuario usuario = usuarioService.findByIdOrThrowNotFoundRequestException(clienteIn.getUsuarioId());
+        Cliente cliente = new Cliente(usuario, clienteIn.getNome(), clienteIn.getEmail(), clienteIn.getCnpj(), clienteIn.getEndereco(), clienteIn.getDataCadastro());
+
         cliente = clienteRepository.save(cliente);
 
         return new ClienteOut(cliente);
     } 
 
-    public Cliente save(Cliente cliente) {
-        return clienteRepository.save(cliente);
-    }
-
-    public ClienteOut findById(String id) {
+    public ClienteOut findById(Long id) {
         return new ClienteOut(findByIdOrThrowNotFoundRequestException(id));
     }
 
@@ -41,14 +40,14 @@ public class ClienteService {
         return ClienteOut.converte(clienteRepository.findAll());
     }
 
-    public void update(String id, ClienteIn clienteIn) {
+    public void update(Long id, ClienteIn clienteIn) {
         Cliente savedCliente = findByIdOrThrowNotFoundRequestException(id);
-        Cliente cliente = new Cliente(savedCliente.getId(), clienteIn.getNome(), clienteIn.getEmail(), clienteIn.getFoto(), clienteIn.getCnpj(), clienteIn.getEndereco(), clienteIn.getDataCadastro());
+        Cliente cliente = new Cliente(savedCliente.getId(), savedCliente.getUsuario(), clienteIn.getNome(), clienteIn.getEmail(), clienteIn.getCnpj(), clienteIn.getEndereco(), clienteIn.getDataCadastro());
     
         clienteRepository.save(cliente);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         clienteRepository.delete(findByIdOrThrowNotFoundRequestException(id));
     }
 

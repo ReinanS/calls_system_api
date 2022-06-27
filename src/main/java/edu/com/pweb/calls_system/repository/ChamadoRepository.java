@@ -14,4 +14,7 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Long>{
     
     @Query(value = "SELECT * FROM CHAMADOS WHERE CLIENTE_ID = ?", nativeQuery = true)
     List<Chamado> findByClienteId(@Param("clientId") Long clientId);
+
+    @Query(value = "SELECT CHAMADOS.ID, CHAMADOS.ASSUNTO, CHAMADOS.DATA_CADASTRO, CHAMADOS.STATUS, CHAMADOS.CLIENTE_ID FROM CHAMADOS INNER JOIN CLIENTES ON CHAMADOS.CLIENTE_ID = CLIENTES.ID WHERE CLIENTES.USUARIO_UID = ?", nativeQuery = true)
+    List<Chamado> findByUsuarioId(@Param("usuarioId") String usuarioId);
 }

@@ -24,7 +24,7 @@ public class ChamadoService {
     }
 
     public ChamadoOut save(ChamadoIn chamadoIn) {
-        Cliente cliente = clienteService.findByIdOrThrowNotFoundRequestException(chamadoIn.getIdCliente());
+        Cliente cliente = clienteService.findByIdOrThrowNotFoundRequestException(chamadoIn.getClienteId());
         Chamado chamado = new Chamado(cliente, chamadoIn.getAssunto(), chamadoIn.getStatus(), chamadoIn.getDataCadastro());
        
         chamado = chamadoRepository.save(chamado);
@@ -36,8 +36,12 @@ public class ChamadoService {
         return new ChamadoOut(findByIdOrThrowNotFoundRequestException(id));
     }
 
+    public List<ChamadoOut> listAll(Long clienteId) {
+        return ChamadoOut.converte(chamadoRepository.findByClienteId(clienteId));
+    }
+
     public List<ChamadoOut> listAll(String usuarioId) {
-        return ChamadoOut.converte(chamadoRepository.findByClienteId(usuarioId));
+        return ChamadoOut.converte(chamadoRepository.findByUsuarioId(usuarioId));
     }
 
     public void update(Long id, ChamadoIn chamadoIn) {
