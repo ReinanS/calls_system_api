@@ -13,5 +13,5 @@ import edu.com.pweb.calls_system.model.Chamado;
 public interface ChamadoRepository extends JpaRepository<Chamado, Long>{
     
     @Query(value = "SELECT * FROM CHAMADOS WHERE CLIENTE_ID = ?", nativeQuery = true)
-    List<Chamado> findByClienteId(@Param("idCliente") String idCliente);
+    List<Chamado> findByClienteId(@Param("clientId") Long clientId);
 }
