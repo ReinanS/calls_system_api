@@ -1,40 +1,53 @@
 package edu.com.pweb.calls_system.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity(name = "clientes")
 public class Cliente {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    private String id;
 
-    @NotBlank
-    private String auth;
-    
     @NotBlank
     private String nome;
-
+    
     @NotBlank
+    private String email;
+
+    @Lob
+    private byte[] foto;
+
     private String cnpj;
 
-    @NotBlank
     private String endereco;
 
-    public Cliente(String auth, String nome, String cnpj, String endereco) {
-        this.auth = auth;
-        this.nome = nome;
-        this.cnpj = cnpj;
-        this.endereco = endereco;
+    private LocalDate dataCadastro;
+
+    public Cliente(String nome, String email, byte[] foto,  String cnpj, String endereco, LocalDate dataCadastro) {
+      this.nome = nome;
+      this.email = email;
+      this.foto = foto;
+      this.cnpj = cnpj;
+      this.endereco = endereco;
+      this.dataCadastro = dataCadastro;
     }
+
+    public Cliente(String nome, String email, LocalDate dataCadastro) {
+        this.nome = nome;
+        this.email = email;
+        this.dataCadastro = dataCadastro;
+    }
+    
 }

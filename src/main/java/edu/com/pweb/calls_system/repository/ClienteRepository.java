@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import edu.com.pweb.calls_system.model.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+public interface ClienteRepository extends JpaRepository<Cliente, String>{
     
 }

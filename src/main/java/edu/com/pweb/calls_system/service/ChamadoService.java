@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import edu.com.pweb.calls_system.dto.ChamadoIn;
+import edu.com.pweb.calls_system.dto.ChamadoOut;
 import edu.com.pweb.calls_system.model.Chamado;
 import edu.com.pweb.calls_system.model.Cliente;
-import edu.com.pweb.calls_system.model.dto.ChamadoIn;
-import edu.com.pweb.calls_system.model.dto.ChamadoOut;
 import edu.com.pweb.calls_system.repository.ChamadoRepository;
 import lombok.AllArgsConstructor;
 
@@ -36,8 +36,8 @@ public class ChamadoService {
         return new ChamadoOut(findByIdOrThrowNotFoundRequestException(id));
     }
 
-    public List<ChamadoOut> listAll() {
-        return ChamadoOut.converte(chamadoRepository.findAll());
+    public List<ChamadoOut> listAll(String usuarioId) {
+        return ChamadoOut.converte(chamadoRepository.findByClienteId(usuarioId));
     }
 
     public void update(Long id, ChamadoIn chamadoIn) {

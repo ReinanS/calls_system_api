@@ -9,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import edu.com.pweb.calls_system.model.enums.Assunto;
+import edu.com.pweb.calls_system.model.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +28,7 @@ public class Chamado {
     private Long id;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Cliente cliente;
 
     @Enumerated(EnumType.STRING)
@@ -32,7 +38,6 @@ public class Chamado {
     private Status status;
 
     private LocalDate dataCadastro;
-
 
     public Chamado(Cliente cliente, Assunto assunto, Status status, LocalDate dataCadastro) {
         this.cliente = cliente;
