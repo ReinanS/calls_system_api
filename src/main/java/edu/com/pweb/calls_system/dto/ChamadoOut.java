@@ -15,6 +15,7 @@ public class ChamadoOut {
     private ClienteOut cliente;
     private Assunto assunto;
     private Status status;
+    private String complemento;
     private LocalDate dataCadastro;
 
     public ChamadoOut(Chamado chamado) {
@@ -22,6 +23,7 @@ public class ChamadoOut {
         this.cliente = new ClienteOut(chamado.getCliente());
         this.assunto = chamado.getAssunto();
         this.status = chamado.getStatus();
+        this.complemento = chamado.getComplemento();
         this.dataCadastro = chamado.getDataCadastro();
     }
 

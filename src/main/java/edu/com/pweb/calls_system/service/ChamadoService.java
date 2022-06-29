@@ -1,5 +1,6 @@
 package edu.com.pweb.calls_system.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class ChamadoService {
 
     public ChamadoOut save(ChamadoIn chamadoIn) {
         Cliente cliente = clienteService.findByIdOrThrowNotFoundRequestException(chamadoIn.getClienteId());
-        Chamado chamado = new Chamado(cliente, chamadoIn.getAssunto(), chamadoIn.getStatus(), chamadoIn.getDataCadastro());
+        Chamado chamado = new Chamado(cliente, chamadoIn.getAssunto(), chamadoIn.getStatus(), chamadoIn.getComplemento(), LocalDate.now());
        
         chamado = chamadoRepository.save(chamado);
         
@@ -46,7 +47,7 @@ public class ChamadoService {
 
     public void update(Long id, ChamadoIn chamadoIn) {
         Chamado savedChamado = findByIdOrThrowNotFoundRequestException(id);
-        Chamado chamado = new Chamado(savedChamado.getId() ,savedChamado.getCliente(), chamadoIn.getAssunto(), chamadoIn.getStatus(), chamadoIn.getDataCadastro());
+        Chamado chamado = new Chamado(savedChamado.getId() ,savedChamado.getCliente(), chamadoIn.getAssunto(), chamadoIn.getStatus(), chamadoIn.getComplemento(), LocalDate.now());
         
         chamadoRepository.save(chamado);
     }

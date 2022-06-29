@@ -1,5 +1,6 @@
 package edu.com.pweb.calls_system.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.com.pweb.calls_system.dto.UsuarioIn;
 import edu.com.pweb.calls_system.dto.UsuarioOut;
@@ -53,11 +57,19 @@ public class UsuarioController {
 
     }
    
+    // @ApiOperation(value = "Atualiza cliente")
+    // @PutMapping("/{id}")
+    // @Transactional
+    // public ResponseEntity<?> update(@PathVariable String id, @RequestBody UsuarioIn usuarioIn) {
+    //    usuarioService.update(id, usuarioIn);
+    //     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    // }
+
     @ApiOperation(value = "Atualiza cliente")
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody UsuarioIn usuarioIn) {
-       usuarioService.update(id, usuarioIn);
+    public ResponseEntity<?> update(@PathVariable String id,  @RequestParam("nome") String nome, @RequestPart("foto") MultipartFile foto) throws IOException {
+       usuarioService.update(id, nome, foto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

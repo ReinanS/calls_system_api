@@ -1,5 +1,6 @@
 package edu.com.pweb.calls_system.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class ClienteService {
 
     public ClienteOut save(ClienteIn clienteIn) {
         Usuario usuario = usuarioService.findByIdOrThrowNotFoundRequestException(clienteIn.getUsuarioId());
-        Cliente cliente = new Cliente(usuario, clienteIn.getNome(), clienteIn.getEmail(), clienteIn.getCnpj(), clienteIn.getEndereco(), clienteIn.getDataCadastro());
+        Cliente cliente = new Cliente(usuario, clienteIn.getNome(), clienteIn.getCnpj(), clienteIn.getEndereco(), LocalDate.now());
 
         cliente = clienteRepository.save(cliente);
 
@@ -42,7 +43,7 @@ public class ClienteService {
 
     public void update(Long id, ClienteIn clienteIn) {
         Cliente savedCliente = findByIdOrThrowNotFoundRequestException(id);
-        Cliente cliente = new Cliente(savedCliente.getId(), savedCliente.getUsuario(), clienteIn.getNome(), clienteIn.getEmail(), clienteIn.getCnpj(), clienteIn.getEndereco(), clienteIn.getDataCadastro());
+        Cliente cliente = new Cliente(savedCliente.getId(), savedCliente.getUsuario(), clienteIn.getNome(), clienteIn.getCnpj(), clienteIn.getEndereco(), savedCliente.getDataCadastro());
     
         clienteRepository.save(cliente);
     }

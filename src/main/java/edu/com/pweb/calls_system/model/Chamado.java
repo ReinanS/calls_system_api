@@ -1,6 +1,8 @@
 package edu.com.pweb.calls_system.model;
 
 import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,12 +39,16 @@ public class Chamado {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column(columnDefinition = "LONGTEXT")
+    private String complemento;
+
     private LocalDate dataCadastro;
 
-    public Chamado(Cliente cliente, Assunto assunto, Status status, LocalDate dataCadastro) {
+    public Chamado(Cliente cliente, Assunto assunto, Status status, String complemento ,LocalDate dataCadastro) {
         this.cliente = cliente;
         this.assunto = assunto;
         this.status = status;
+        this.complemento = complemento;
         this.dataCadastro = dataCadastro;
     }
 }

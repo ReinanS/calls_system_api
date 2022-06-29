@@ -1,9 +1,11 @@
 package edu.com.pweb.calls_system.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import edu.com.pweb.calls_system.dto.UsuarioIn;
@@ -23,7 +25,7 @@ public class UsuarioService {
     }
     
     public UsuarioOut save(UsuarioIn usuarioIn) {
-        Usuario usuario = new Usuario(usuarioIn.getUid(), usuarioIn.getNome(), usuarioIn.getEmail(), usuarioIn.getFoto());
+        Usuario usuario = new Usuario(usuarioIn.getUid(), usuarioIn.getNome(), (usuarioIn.getEmail()), usuarioIn.getFoto());
         usuarioRepository.save(usuario);
 
         return new UsuarioOut(usuario);
@@ -39,9 +41,15 @@ public class UsuarioService {
 
     public void update(String id, UsuarioIn usuarioIn) {
         Usuario savedUsuario = findByIdOrThrowNotFoundRequestException(id);
-        Usuario usuario = new Usuario(savedUsuario.getUid(), usuarioIn.getNome(), usuarioIn.getEmail(), usuarioIn.getFoto());
+        Usuario usuario = new Usuario(savedUsuario.getUid(), usuarioIn.getNome(), savedUsuario.getEmail(), usuarioIn.getFoto());
 
         usuarioRepository.save(usuario);
+    }
+
+    public void update(String id, String nome, MultipartFile img) throws IOException {
+        Usuario savedUsuario = findByIdOrThrowNotFoundRequestException(id);
+        savedUsuario.setNome(nome);
+        savedUsuario.setFoto(img.getBytes());
     }
 
     public void delete(String id) {

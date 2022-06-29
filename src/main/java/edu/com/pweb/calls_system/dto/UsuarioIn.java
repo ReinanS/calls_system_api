@@ -1,7 +1,6 @@
 package edu.com.pweb.calls_system.dto;
 
 import javax.persistence.Lob;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
@@ -15,7 +14,6 @@ public class UsuarioIn {
     @NotBlank
     private String nome;
 
-    @NotBlank @Email
     private String email;
 
     @Lob

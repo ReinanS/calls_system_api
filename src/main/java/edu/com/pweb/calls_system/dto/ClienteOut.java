@@ -14,7 +14,6 @@ public class ClienteOut {
     private Long id;
     private UsuarioOut usuario;
     private String nome;
-    private String email;
     private String cnpj;
     private String endereco;
     private LocalDate dataCadastro;
@@ -23,7 +22,6 @@ public class ClienteOut {
         this.id = cliente.getId();
         this.usuario = new UsuarioOut(cliente.getUsuario());
         this.nome = cliente.getNome();
-        this.email = cliente.getEmail();
         this.cnpj = cliente.getCnpj();
         this.endereco = cliente.getEndereco();
         this.dataCadastro = cliente.getDataCadastro();
