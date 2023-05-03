@@ -40,7 +40,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-sonarqube {
+sonar {
   properties {
    	property "sonar.projectKey", "calls_system_api"
     property "sonar.projectName", "calls_system_api"
